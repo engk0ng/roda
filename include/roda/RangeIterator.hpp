@@ -1,21 +1,18 @@
 #ifndef RODA_RANGE_ITERATOR_HPP
 #define RODA_RANGE_ITERATOR_HPP
 
-#include <iterator>
-#include <type_traits>
+#include "type_traits.hpp"
 
 namespace roda {
 
 template<typename Iterator>
 class RangeIterator {
 public:
-  using iterator_category =
-   typename std::iterator_traits<Iterator>::iterator_category;
-  using value_type = typename std::iterator_traits<Iterator>::value_type;
-  using difference_type =
-   typename std::iterator_traits<Iterator>::difference_type;
-  using pointer = typename std::iterator_traits<Iterator>::pointer;
-  using reference = typename std::iterator_traits<Iterator>::reference;
+  using IteratorCategory = iterator_category_t<Iterator>;
+  using ValueType = iterator_value_type_t<Iterator>;
+  using DifferenceType = iterator_difference_type_t<Iterator>;
+  using Pointer = iterator_pointer_t<Iterator>;
+  using Reference = iterator_reference_t<Iterator>;
 
   RangeIterator(Iterator begin, Iterator end)
   : m_iter{begin}
@@ -52,7 +49,7 @@ public:
     return m_iter != m_end;
   }
 
-  reference operator*() const
+  Reference operator*() const
   {
     return *m_iter;
   }
