@@ -55,3 +55,17 @@ TEST_CASE("FilterIterator")
   REQUIRE((std::is_same_v<int*, typename RangeItType::Pointer>));
   REQUIRE((std::is_same_v<int&, typename RangeItType::Reference>));
 }
+
+TEST_CASE("count and count_if")
+{
+  auto v = std::vector<int>{1, 2, 3, 4, 4, 3, 7, 8, 9, 10};
+  auto it = roda::RangeIterator{v};
+
+  auto num_items1 = roda::count(it, 3);
+  auto num_items2 = roda::count(it, 5);
+  auto num_items3 = roda::count_if(it, [](int i) { return i % 3 == 0; });
+
+  REQUIRE(num_items1 == 2);
+  REQUIRE(num_items2 == 0);
+  REQUIRE(num_items3 == 3);
+}
