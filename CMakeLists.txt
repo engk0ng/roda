@@ -9,7 +9,7 @@ add_executable(roda-test
   "${PROJECT_SOURCE_DIR}/test/main.cpp"
 )
 
-target_compile_options(roda-test PRIVATE "-Wall" "-stdlib=libc++")
+target_compile_options(roda-test PRIVATE "-Wall" "-Wextra" "-Wpedantic" "-stdlib=libc++")
 
 target_include_directories(roda-test
 PRIVATE
