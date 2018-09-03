@@ -69,3 +69,31 @@ TEST_CASE("count and count_if")
   REQUIRE(num_items2 == 0);
   REQUIRE(num_items3 == 3);
 }
+
+TEST_CASE("find")
+{
+  std::vector<int> v{0, 1, 2, 3, 4};
+  auto it = roda::RangeIterator{v};
+
+  auto result1 = roda::find(it, 3);
+  auto result2 = roda::find_if(it, [](auto i) { return i > 3; });
+  auto result3 = roda::find_if_not(it, [](auto i) { return i < 1; });
+
+  {
+    auto cout = std::ostringstream{};
+    roda::for_each(result1, [&cout](auto val) { cout << val; });
+    REQUIRE(cout.str() == "34");
+  }
+
+  {
+    auto cout = std::ostringstream{};
+    roda::for_each(result2, [&cout](auto val) { cout << val; });
+    REQUIRE(cout.str() == "4");
+  }
+
+  {
+    auto cout = std::ostringstream{};
+    roda::for_each(result3, [&cout](auto val) { cout << val; });
+    REQUIRE(cout.str() == "1234");
+  }
+}
