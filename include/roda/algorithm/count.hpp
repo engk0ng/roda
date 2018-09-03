@@ -5,7 +5,11 @@
 
 namespace roda {
 
-template<class InputIt, class T>
+template<class InputIt,
+         class T,
+         typename = decltype(std::declval<iterator_value_type_t<InputIt>>() ==
+                              std::declval<T>(),
+                             (void)0)>
 constexpr iterator_difference_type_t<InputIt>
 count(InputIt first, const T& value)
 {
