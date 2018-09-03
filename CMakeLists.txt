@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(roda-test
-  ${MOLPHENE_SRC_FILES}
   "${PROJECT_SOURCE_DIR}/test/main.cpp"
 )
 
