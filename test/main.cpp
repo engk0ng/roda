@@ -9,19 +9,42 @@
 
 #include <roda/FilterIterator.hpp>
 #include <roda/RangeIterator.hpp>
+#include <roda/ReverseRangeIterator.hpp>
 #include <roda/algorithm.hpp>
 
-TEST_CASE("RangeIterator and FilterIterator")
+TEST_CASE("RangeIterator")
 {
-  auto arr = std::array<int, 20>{{15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25}};
+  auto arr = std::array<int, 5>{{1, 2, 3, 4, 5}};
+  auto rangeit = roda::RangeIterator{arr};
+
+  auto cout = std::ostringstream{};
+  roda::for_each(rangeit, [&cout](auto val) { cout << val << ' '; });
+
+  REQUIRE(cout.str() == "1 2 3 4 5 ");
+}
+
+TEST_CASE("ReverseRangeIterator")
+{
+  auto arr = std::array<int, 5>{{1, 2, 3, 4, 5}};
+  auto rangeit = roda::ReverseRangeIterator{arr};
+
+  auto cout = std::ostringstream{};
+  roda::for_each(rangeit, [&cout](auto val) { cout << val << ' '; });
+
+  REQUIRE(cout.str() == "5 4 3 2 1 ");
+}
+
+TEST_CASE("FilterIterator")
+{
+  auto arr = std::array<int, 10>{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}};
   auto rangeit = roda::RangeIterator{arr};
   auto filterit =
-   roda::FilterIterator(rangeit, [](const auto& a) { return a > 20; });
+   roda::FilterIterator(rangeit, [](const auto& a) { return a >= 5; });
 
   auto cout = std::ostringstream{};
   roda::for_each(filterit, [&cout](auto val) { cout << val << ' '; });
 
-  REQUIRE(cout.str() == "21 22 23 24 25 ");
+  REQUIRE(cout.str() == "5 6 7 8 9 ");
 
   using RangeItType = std::decay_t<decltype(rangeit)>;
 
